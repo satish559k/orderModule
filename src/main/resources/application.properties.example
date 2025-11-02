@@ -1,1 +1,23 @@
 spring.application.name=orderModule
+
+#Logging Configuration
+logging.level.org.springframework=INFO
+logging.level.org.example=DEBUG
+
+spring.datasource.url=
+spring.datasource.username=
+spring.datasource.password=
+
+spring.jpa.hibernate.ddl-auto=update
+spring.jpa.show-sql=false
+spring.jpa.properties.hibernate.dialect=org.hibernate.dialect.PostgreSQLDialect
+spring.jpa.properties.hibernate.format_sql=false
+
+logging.level.org.springframework.security=DEBUG
+
+
+#Email configuration
+udeesa.email.sender.host=smtp.gmail.com
+udeesa.email.sender.debug=true
+udeesa.email.sender.user=zyx@gmail.com
+udeesa.email.sender.password=
