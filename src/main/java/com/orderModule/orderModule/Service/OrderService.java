@@ -17,20 +17,16 @@ import java.util.UUID;
 public class OrderService {
 
     private final ProductRepo productRepo;
-    private final KafkaTemplate<?, ?> kafkaTemplate;
+    private final KafkaTemplate<String, Object> kafkaTemplate;
 
     public boolean CheckOrderedProductExist(UUID productId,int quantityOrder){
         try{
-            Product data = productRepo.findByproductproductId(productId);
+            Product data = productRepo.findByproductId(productId);
             int quantity = data.getQuantity();
+            log.info("quantity: "+quantity);
             if( quantity>0 && quantityOrder<=quantity){
-                data.setQuantity(data.getQuantity()-quantityOrder);
-                productRepo.save(data);
-                HashMap<String,Object> datakafka = new HashMap<>();
-                datakafka.put("productId",productId);
-                datakafka.put("quantityOrder",quantityOrder);
-
-                kafkaTemplate.send("Inventory",datakafka);
+//                data.setQuantity(data.getQuantity()-quantityOrder);
+//                productRepo.save(data);
                 return true;
             }
             return false;
@@ -41,6 +37,10 @@ public class OrderService {
     }
 
     public void CreateOrder(OrderRequest orderRequest){
-
+        HashMap<String,Object> datakafka = new HashMap<>();
+        datakafka.put("productId",orderRequest.getProductId());
+        datakafka.put("quantityOrder",orderRequest.getQuantity());
+        log.info("data produced in kafka "+datakafka.toString());
+        kafkaTemplate.send("Inventory",datakafka);
     }
 }

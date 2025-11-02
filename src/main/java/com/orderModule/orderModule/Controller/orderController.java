@@ -8,16 +8,20 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+
 @RestController
+@RequestMapping("order")
+
 @AllArgsConstructor
-public class Order {
+public class orderController {
 
 
     private final OrderService orderService;
 
-    @PostMapping("order")
+    @PostMapping("/new")
     public ResponseEntity<RestResponse> order(@RequestBody OrderRequest orderRequest) {
         try{
             boolean isExist =  orderService.CheckOrderedProductExist(orderRequest.getProductId(),orderRequest.getQuantity());
