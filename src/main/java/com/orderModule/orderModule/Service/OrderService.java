@@ -39,6 +39,7 @@ public class OrderService {
     public void CreateOrder(OrderRequest orderRequest){
         HashMap<String,Object> datakafka = new HashMap<>();
         datakafka.put("productId",orderRequest.getProductId());
+        datakafka.put("userId",orderRequest.getUserId());
         datakafka.put("quantityOrder",orderRequest.getQuantity());
         log.info("data produced in kafka "+datakafka.toString());
         kafkaTemplate.send("Inventory",datakafka);
